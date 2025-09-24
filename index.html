@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>موسى — بورتفوليو مطور واجهات</title>
+  <meta name="description" content="بورتفوليو موسى — مطور واجهات ومصمم UI/UX. شاهد المشاريع، الخبرات، وحمل السيرة الذاتية." />
+  <meta name="keywords" content="بورتفوليو, مطور واجهات, UI, UX, Frontend, HTML, CSS, JavaScript" />
+  <meta name="author" content="موسى" />
+  <!-- Open Graph (اختياري لاحقاً) -->
+  <meta property="og:title" content="موسى — بورتفوليو مطور واجهات" />
+  <meta property="og:description" content="بورتفوليو ومشاريع موسى في تطوير الواجهات وتصميم تجربة المستخدم." />
+
+  <!-- أيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <!-- خط Cairo (إمّا تحط محلياً لاحقاً) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================
+       ZER0-like Clean Corporate UI
+       Single-file (RTL) — Responsive
+       ============================ */
+
+    :root{
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --text: #0f1724;
+      --accent: #0ea5a4;    /* teal */
+      --accent-2: #2563eb;  /* blue */
+      --glass: rgba(255,255,255,0.6);
+      --radius: 12px;
+      --shadow: 0 12px 30px rgba(2,6,23,0.06);
+      --max-width: 1150px;
+      --transition: 320ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Dark theme overrides */
+    body.dark{
+      --bg: linear-gradient(180deg,#081226,#04131a);
+      --panel: linear-gradient(180deg,#071226,#05121a);
+      --muted: #9aa7b8;
+      --text: #e6eef6;
+      --accent: #2dd4bf;
+      --accent-2: #60a5fa;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 14px 40px rgba(2,6,23,0.6);
+    }
+
+    /* Basic reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Cairo",system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition:background var(--transition), color var(--transition);
+      direction: rtl;
+      line-height:1.6;
+    }
+    a{color:inherit}
+    img{display:block;max-width:100%;height:auto;border-radius:8px}
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* Header - sticky, minimal */
+    header.site-header{
+      position:sticky; top:0; z-index:1200;
+      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.6);
+      border-bottom: 1px solid rgba(15,23,36,0.06);
+      transition:background var(--transition), border-color var(--transition);
+    }
+    body.dark header.site-header{
+      background: rgba(6,10,15,0.48);
+      border-color: rgba(255,255,255,0.04);
+    }
+    .header-inner{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent));
+      display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;
+      box-shadow:0 8px 24px rgba(37,99,235,0.08);
+      font-size:1.05rem;
+    }
+    .brand h1{font-size:1rem;margin:0}
+    nav.main-nav{display:flex;align-items:center;gap:16px}
+    nav.main-nav a{padding:8px 10px;border-radius:8px;font-weight:600;color:var(--muted);transition:all .18s}
+    nav.main-nav a:hover{background:var(--glass);color:var(--text)}
+    .header-actions{display:flex;align-items:center;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;font-weight:700;border:0;cursor:pointer}
+    .btn-cv{background:var(--accent-2);color:#fff;box-shadow:0 10px 30px rgba(37,99,235,0.12)}
+    .btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--text);padding:8px;border-radius:10px}
+    .theme-toggle{background:transparent;border:1px solid rgba(15,23,36,0.06);padding:8px;border-radius:10px;cursor:pointer}
+    body.dark .theme-toggle{border-color:rgba(255,255,255,0.06)}
+
+    /* Mobile nav toggle */
+    .mobile-toggle{display:none;background:transparent;border:0;font-size:1.15rem;cursor:pointer}
+
+    /* Sections */
+    section{padding:64px 0}
+    section .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    section h2{margin:0;font-size:1.6rem}
+    .muted{color:var(--muted)}
+
+    /* HERO / ABOUT */
+    .hero{padding-top:22px;padding-bottom:22px}
+    .hero-grid{display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:center}
+    .card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .avatar{width:100%;height:360px;object-fit:cover;border-radius:10px}
+    .about-intro h2{margin:0 0 8px}
+    .meta-list{list-style:none;padding:0;margin:12px 0;color:var(--muted)}
+    .meta-list li{margin-bottom:6px}
+    .socials{display:flex;gap:10px;margin-top:14px}
+    .socials a{display:inline-flex;width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center;border:1px solid rgba(15,23,36,0.06);color:var(--text)}
+    .socials a:hover{background:var(--accent-2);color:#fff;border-color:transparent}
+    .cta-row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+
+    /* PROJECTS */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .project{
+      background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.86));
+      border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .36s, box-shadow .36s;
+    }
+    body.dark .project{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .project:hover{transform:translateY(-10px);box-shadow:0 26px 60px rgba(2,6,23,0.12)}
+    .project-thumb{height:160px;overflow:hidden}
+    .project-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .project-body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .project-body h3{margin:0}
+    .project-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+    .tag{padding:6px 10px;border-radius:999px;background:rgba(37,99,235,0.08);color:var(--accent-2);font-weight:700}
+
+    /* TIMELINE - simple & clean */
+    .timeline{position:relative;padding:20px 0}
+    .timeline-line{position:absolute;left:50%;transform:translateX(-50%);width:3px;height:100%;background:linear-gradient(180deg,rgba(37,99,235,0.14),rgba(37,99,235,0.04));border-radius:2px}
+    .t-list{display:block;margin:0;padding:0}
+    .t-item{position:relative;width:50%;padding:16px 24px;box-sizing:border-box}
+    .t-item:nth-child(odd){left:50%}
+    .t-item:nth-child(even){left:0}
+    .t-card{background:var(--panel);padding:12px;border-radius:10px;box-shadow:var(--shadow)}
+    .t-dot{position:absolute;top:28px;right:calc(50% - 12px);width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px rgba(14,165,164,0.06)}
+
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .skill{background:var(--panel);padding:12px;border-radius:10px;box-shadow:var(--shadow)}
+    .skill label{font-weight:800;display:block;margin-bottom:8px}
+    .progress{height:10px;background:rgba(15,23,36,0.06);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .95s ease}
+
+    /* CONTACT */
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:start}
+    .form-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+    .form-card input,.form-card textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,36,0.06);margin-bottom:10px;background:transparent;color:inherit}
+    .form-card button{background:var(--accent-2);color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer}
+
+    /* Footer */
+    footer.site-footer{padding:28px 0;text-align:center;color:var(--muted);margin-top:36px}
+
+    /* Utilities & small screens */
+    .muted{color:var(--muted)}
+    .flex{display:flex;gap:12px;align-items:center}
+
+    @media (max-width:980px){
+      .hero-grid{grid-template-columns:1fr}
+      .avatar{height:300px}
+      .t-item, .t-item:nth-child(odd){left:0;width:100%;padding-left:36px}
+      .t-item:nth-child(even){left:0}
+      .timeline-line{left:16px}
+      .t-dot{right:auto;left:6px}
+      .contact-grid{grid-template-columns:1fr}
+      nav.main-nav{display:none}
+      .mobile-toggle{display:inline-flex}
+    }
+
+    @media (max-width:560px){
+      .avatar{height:220px}
+      .project-thumb{height:140px}
+      .header-inner{padding:10px 16px}
+    }
+
+    /* Scroll reveal base */
+    [data-reveal]{opacity:0;transform:translateY(10px);transition:all .6s cubic-bezier(.2,.9,.3,1)}
+    [data-reveal].revealed{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo">م</div>
+        <div>
+          <h1>عمــــــرو موســــي</h1>
+          <div class="muted" style="font-size:0.82rem">مطور واجهات • مصمم UI/UX</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="القائمة الرئيسية">
+        <a href="#about">عني</a>
+        <a href="#projects">مشاريع</a>
+        <a href="#timeline">خبرات</a>
+        <a href="#skills">مهارات</a>
+        <a href="#contact">تواصل</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="mobile-toggle" id="mobileOpen" aria-label="افتح القائمة"><i class="fa fa-bars"></i></button>
+        <button class="theme-toggle" id="themeToggle" aria-pressed="false" title="تبديل الوضع">🌙</button>
+        <a class="btn btn-cv" href="cv.pdf" download><i class="fa fa-download" style="margin-left:6px"></i> تحميل CV</a>
+      </div>
+    </div>
+
+    <!-- Mobile nav panel -->
+    <div id="mobileNav" style="display:none;border-top:1px solid rgba(15,23,36,0.04);background:rgba(255,255,255,0.6);">
+      <div class="container" style="display:flex;flex-direction:column;gap:8px;padding:12px 0">
+        <a href="#about">عني</a>
+        <a href="#projects">مشاريع</a>
+        <a href="#timeline">خبرات</a>
+        <a href="#skills">مهارات</a>
+        <a href="#contact">تواصل</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ABOUT / HERO -->
+    <section id="about" class="hero container" data-reveal>
+      <div class="hero-grid">
+        <div class="card">
+          <img class="avatar" src="IMG_20230826_023625_111.png  " alt="صورة موسى" />
+        </div>
+
+        <div class="about-intro">
+          <div class="card">
+            <h2>مرحبا — أنا  عمــــــرو مــــوسى</h2>
+            <p class="muted">أبني واجهات مواقع احترافية، سريعة ومتجاوبة. أعمل على تحسين تجربة المستخدم وتصميم مكونات واضحة وسهلة الاستخدام.</p>
+
+            <ul class="meta-list">
+              <li><strong>الموقع:</strong> القاهرة، مصر</li>
+              <li><strong>التخصص:</strong> Frontend • UI/UX</li>
+              <li><strong>الخبرة:</strong> 3+ سنوات</li>
+            </ul>
+
+            <div class="flex cta-row">
+              <a class="btn btn-cv" href="cv.pdf" download><i class="fa fa-file-arrow-down" style="margin-left:6px"></i> حمل السيرة</a>
+              <a class="btn btn-ghost" href="#contact">أرسل رسالة</a>
+            </div>
+
+            <div class="socials">
+              <a href="https://www.linkedin.com/in/amr-mossa-341572243/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+              <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="container" data-reveal>
+      <div class="section-head">
+        <h2>مشاريعي الحديثة</h2>
+        <div class="muted">نماذج لمشاريع تم تنفيذها وواجهات تفاعلية</div>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project" role="article" aria-label="مشروع بوابة تعليمية">
+          <div class="project-thumb"><img src="https://via.placeholder.com/1000x600?text=Project+1" alt="مشروع 1"></div>
+          <div class="project-body">
+            <h3>بوابة تعليمية متكاملة</h3>
+            <p class="muted">بوابة دورات ومتابعة أداء الطلاب مع لوحة تحكم للمحاضرين.</p>
+            <div class="project-meta">
+              <a class="pc-link muted" href="#" target="_blank" rel="noopener">عرض</a>
+              <span class="tag">HTML • CSS • JS</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project" role="article" aria-label="مشروع تطبيق مهام">
+          <div class="project-thumb"><img src="https://via.placeholder.com/1000x600?text=Project+2" alt="مشروع 2"></div>
+          <div class="project-body">
+            <h3>تطبيق إدارة مهام</h3>
+            <p class="muted">تطبيق ويب لإدارة المهام مع فلترة وحفظ محلي وتجربة مستخدم بسيطة.</p>
+            <div class="project-meta">
+              <a class="pc-link muted" href="#" target="_blank" rel="noopener">عرض</a>
+              <span class="tag">Vanilla JS</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project" role="article" aria-label="مشروع موقع شركة">
+          <div class="project-thumb"><img src="https://via.placeholder.com/1000x600?text=Project+3" alt="مشروع 3"></div>
+          <div class="project-body">
+            <h3>موقع تعريفي للشركات</h3>
+            <p class="muted">موقع حديث للشركات مع صفحات خدمات وعملاء ونماذج تواصل.</p>
+            <div class="project-meta">
+              <a class="pc-link muted" href="#" target="_blank" rel="noopener">عرض</a>
+              <span class="tag">WordPress • Theme</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="container" data-reveal>
+      <div class="section-head">
+        <h2>الخبرات & الشهادات</h2>
+        <div class="muted">تسلسل زمني لأهم المحطات المهنية</div>
+      </div>
+
+      <div class="timeline" aria-live="polite">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        <div class="t-list">
+          <div class="t-item">
+            <div class="t-card">
+              <div class="t-year">2025</div>
+              <h3>مطور واجهات — شركة ABC</h3>
+              <p class="muted">إعادة تصميم واجهات وتحسين أداء التطبيقات وتطبيق نظام مكونات.</p>
+            </div>
+            <div class="t-dot" aria-hidden="true"></div>
+          </div>
+
+          <div class="t-item">
+            <div class="t-card">
+              <div class="t-year">2023</div>
+              <h3>شهادة UI/UX — أكاديمية XYZ</h3>
+              <p class="muted">دورة متقدمة في تجربة المستخدم والنماذج الأولية.</p>
+            </div>
+            <div class="t-dot" aria-hidden="true"></div>
+          </div>
+
+          <div class="t-item">
+            <div class="t-card">
+              <div class="t-year">2021</div>
+              <h3>بداية العمل الحر</h3>
+              <p class="muted">بدء تقديم خدمات تطوير وتصميم للزبائن المحليين.</p>
+            </div>
+            <div class="t-dot" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="container" data-reveal>
+      <div class="section-head">
+        <h2>المهارات</h2>
+        <div class="muted">مستوى الإتقان في الأدوات الأساسية</div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill">
+          <label>HTML</label>
+          <div class="progress"><i data-width="92%"></i></div>
+        </div>
+        <div class="skill">
+          <label>CSS</label>
+          <div class="progress"><i data-width="88%"></i></div>
+        </div>
+        <div class="skill">
+          <label>JavaScript</label>
+          <div class="progress"><i data-width="78%"></i></div>
+        </div>
+        <div class="skill">
+          <label>UI / UX</label>
+          <div class="progress"><i data-width="82%"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container" data-reveal>
+      <div class="section-head">
+        <h2>تواصل معي</h2>
+        <div class="muted">أرسل رسالة سريعة أو استخدم معلومات الاتصال</div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="form-card">
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+            <input name="name" type="text" placeholder="الاسم" required />
+            <input name="email" type="email" placeholder="البريد الإلكتروني" required />
+            <textarea name="message" rows="6" placeholder="الرسالة..." required></textarea>
+
+            <div style="display:flex;gap:12px;align-items:center">
+              <button type="submit" class="btn btn-cv">إرسال الرسالة</button>
+              <div id="formStatus" aria-live="polite" class="muted" style="font-weight:700"></div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="card contact-info" style="padding:18px;border-radius:12px">
+          <h3>معلومات الاتصال</h3>
+          <p class="muted"><strong>البريد:</strong> your-email@example.com</p>
+          <p class="muted"><strong>واتساب:</strong> <a href="https://wa.me/201234567890">+20 123 456 7890</a></p>
+          <p class="muted">أوقات العمل: من 9 صباحاً إلى 6 مساءً بتوقيت مصر</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="text-align:center">
+      <p class="muted" style="margin:0">© <span id="year"></span> عمــــــرو موســــي  — جميع الحقوق محفوظة </p>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================
+       JS: theme, mobile nav,
+       reveals, skills animation,
+       contact submit (Formspree)
+       ========================= */
+
+    // short selectors
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    // set year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const mobileOpen = document.getElementById('mobileOpen');
+    const mobileNav = document.getElementById('mobileNav');
+    if(mobileOpen){
+      mobileOpen.addEventListener('click', () => {
+        const open = mobileNav.style.display === 'block';
+        mobileNav.style.display = open ? 'none' : 'block';
+        mobileOpen.innerHTML = open ? '<i class="fa fa-bars"></i>' : '<i class="fa fa-times"></i>';
+      });
+    }
+
+    // Theme (persist)
+    const themeToggle = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const storedTheme = localStorage.getItem('portfolio-theme');
+    function applyTheme(isDark){
+      if(isDark){
+        document.body.classList.add('dark');
+        themeToggle.textContent = '☀️';
+        themeToggle.setAttribute('aria-pressed','true');
+      } else {
+        document.body.classList.remove('dark');
+        themeToggle.textContent = '🌙';
+        themeToggle.setAttribute('aria-pressed','false');
+      }
+    }
+    if(storedTheme) applyTheme(storedTheme === 'dark');
+    else applyTheme(prefersDark);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = !document.body.classList.contains('dark');
+      applyTheme(isDark);
+      localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
+    });
+
+    // Scroll reveal (simple, performant)
+    const reveals = document.querySelectorAll('[data-reveal]');
+    function revealOnScroll(){
+      reveals.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 80){
+          el.classList.add('revealed');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll, {passive:true});
+    window.addEventListener('load', revealOnScroll);
+
+    // Skills animation
+    const progEls = document.querySelectorAll('.progress i');
+    function animateSkills(){
+      progEls.forEach(i => {
+        if(i.dataset.animated) return;
+        const r = i.getBoundingClientRect();
+        if(r.top < window.innerHeight - 60){
+          i.style.width = i.getAttribute('data-width') || '70%';
+          i.dataset.animated = '1';
+        }
+      });
+    }
+    window.addEventListener('scroll', animateSkills, {passive:true});
+    window.addEventListener('load', animateSkills);
+
+    // Smooth anchor scroll + close mobile panel
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+          if(window.innerWidth <= 980 && mobileNav) {
+            mobileNav.style.display = 'none';
+            if(mobileOpen) mobileOpen.innerHTML = '<i class="fa fa-bars"></i>';
+          }
+        }
+      });
+    });
+
+    // Contact: submit with fetch to Formspree (replace endpoint)
+    const contactForm = $('#contactForm');
+    const formStatus = $('#formStatus');
+    if(contactForm){
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formStatus.textContent = 'جاري الإرسال...';
+        formStatus.style.color = getComputedStyle(document.body).getPropertyValue('--muted');
+
+        const action = contactForm.getAttribute('action');
+        const fd = new FormData(contactForm);
+        try{
+          const res = await fetch(action, {method:'POST', headers:{'Accept':'application/json'}, body: fd});
+          if(res.ok){
+            formStatus.textContent = 'تم الإرسال بنجاح — سأتواصل معك قريباً.';
+            formStatus.style.color = 'var(--accent-2)';
+            contactForm.reset();
+          } else {
+            const data = await res.json().catch(()=>null);
+            formStatus.textContent = data && data.error ? data.error : 'حدث خطأ أثناء الإرسال';
+            formStatus.style.color = 'crimson';
+          }
+        }catch(err){
+          console.error(err);
+          formStatus.textContent = 'فشل الإرسال — تحقق من endpoint أو جرب البريد';
+          formStatus.style.color = 'crimson';
+        }
+        setTimeout(()=> formStatus.textContent = '', 6000);
+      });
+    }
+
+    // Accessibility: close mobile nav on resize
+    window.addEventListener('resize', () => {
+      if(window.innerWidth > 980 && mobileNav) mobileNav.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
